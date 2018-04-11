@@ -80,6 +80,10 @@ class Database
         }
         return new MySQLResult($this, $queryResource);
     }
+
+    public function close(){
+        return $this->db->close();
+    }
 }
 /**
  * MySQLResult Data Fetching Class

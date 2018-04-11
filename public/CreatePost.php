@@ -70,7 +70,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
                     // before the value of $title.  Note also that at the end of $title is a ', ' inside of double quotes.  What this will all render
                     // That will generate this piece of SQL:   values ('title text here', 'content text here', '2017-02-01 00:00:00'  and so
                     // on until the end of the sql command.
-                    $sql = "insert into posts (title, content, startDate, endDate, image) values ('" . $title . "', '" . $content . "', '" . $startDate . "', '" . $endDate . "', '" . $image . "');";
+                    $sql = "insert into products (id, name, description, price, picture, sku, qty_available) values ('" . $id . "', '" . $name . "', '" . $description . "', '" . $price . "', '" . $picture . "', '" . $sku . "','" . $qty_available . "');";
                     $db->query($sql);
                 }
                 ?>
@@ -89,12 +89,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
                 </p>
 
                 <?php
-                $sql = 'select * from posts';
-                $posts = $db->query($sql);
+                $sql = 'select * from products';
+                $products = $db->query($sql);
                 // Loop through the posts and display them
-                while ($post = $posts->fetch()) {
+                while ($products = $products->fetch()) {
                     // Call the method to create the layout for a post
-                    News::story($post);
+                    News::story($products);
                 }
                 ?>
 
@@ -110,10 +110,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
  * Functions that support the createPost page
  */
 $fields = [
-    'title'     => ['required', 'string'],
-    'content'   => ['required', 'string'],
-    'startDate' => ['required', 'date'],
-    'endDate'   => ['required', 'date'],
+    'id'     => ['required', 'string'],
+    'name'   => ['required', 'string'],
+    'description' => ['required', 'date'],
+    'price'   => ['required', 'date'],
+    'picture'   => ['required', 'date'],
+    'sku'   => ['required', 'date'],
+    'qty_available'   => ['required', 'date'],
     //'image'     => ['string']
 ];
 /**
@@ -121,68 +124,83 @@ $fields = [
  */
 function showForm($data = null)
 {
-    $title = $data['title'];
-    $content = $data['content'];
-    $startDate = $data['startDate'];
-    $endDate = $data['endDate'];
-    $image = $data['image'];
+    $id = $data['id'];
+    $name = $data['name'];
+    $description = $data['desription'];
+    $price = $data['price'];
+    $picture = $data['picture'];
+    $sku = $data['sku'];
+    $qty_available = $data['qty_available'];
     echo <<<postform
-    <form id="createPostForm" action='createPost.php' method="POST" class="form-horizontal"  enctype="multipart/form-data">
-        <fieldset>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Create New Product</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Product Name</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="Name" class="form-control input-md" required="">
     
-            <!-- Form Name -->
-            <legend>Create Post</legend>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Description">Description</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="Description" name="Description">Description
+</textarea>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Price</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="$" class="form-control input-md">
     
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="title">Title</label>
-                <div class="col-md-8">
-                    <input id="title" name="title" type="text" placeholder="post title" value="$title" class="form-control input-md" required="">                    
-                </div>
-            </div>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">SKU Number</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="#" class="form-control input-md">
     
-            <!-- Textarea -->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="content">Content</label>
-                <div class="col-md-8">
-                    <textarea class="form-control" id="content" name="content">$content</textarea>
-                </div>
-            </div>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Quantity Available</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" placeholder="#" class="form-control input-md">
     
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="startDate">Effective Date</label>
-                <div class="col-md-8">
-                    <input id="startDate" name="startDate" type="text" placeholder="effective date" value="$startDate" class="form-control input-md" required="">
-                </div>
-            </div>
-    
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="endDate">End Date</label>
-                <div class="col-md-8">
-                    <input id="endDate" name="endDate" type="text" placeholder="end date" value="$endDate" class="form-control input-md">
-                </div>
-            </div>
-    
-            <!-- File Button -->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="image">Image Upload</label>
-                <div class="col-md-8">
-                    <input id="image" name="imageupload" class="input-file" value="$image" type="file">
-                </div>
-            </div>
-    
-            <!-- Button (Double) -->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="submit"></label>
-                <div class="col-md-8">
-                    <button id="submit" name="submit" value="Submit" class="btn btn-success">Submit</button>
-                    <a href = "index.php" button id="cancel" name="cancel" value="Cancel" class="btn btn-info">Cancel</a></button>
-                </div>
-            </div>
-    
-        </fieldset>
-    </form>
+  </div>
+</div>
+
+<!-- File Button --> 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="picture">Upload Picture</label>
+  <div class="col-md-4">
+    <input id="picture" name="picture" class="input-file" type="file">
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-4">
+    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit Product</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
 postform;
 }

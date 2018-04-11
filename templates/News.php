@@ -20,10 +20,11 @@ class news
      */
     public static function story($data)
     {
-        $title = $data['title'];
-        $content = $data['content'];
-        $startDate = $data['startDate'];
-        $endDate = $data['endDate'];
+        $name = $data['name'];
+        $description = $data['description'];
+        $price = $data['price'];
+        $sku = $data['sku'];
+        $qty_available = $data['sku'];
         $pic = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/' . $data['image'];
         if (is_file($pic)) {
             $image = '<img src = "/assets/images/' . $data['image'] . '" width="250">';
@@ -35,11 +36,11 @@ class news
         // $author = $data['firstname'] . ' ' . $data['lastname'];
         echo <<<story
         <div class="top10">
-            <h2>$title</h2>
-            <h5>$startDate</h5>
-            <h5>$endDate</h5>
+            <h2>$name</h2>
+            <h5>$price</h5>
+            <h5>$qty_available</h5>
             $image
-            <p>$content</p>
+            <p>$description</p>
         </div>        
 story;
     }
