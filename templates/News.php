@@ -24,12 +24,12 @@ class news
         $description = $data['description'];
         $price = $data['price'];
         $sku = $data['sku'];
-        $qty_available = $data['sku'];
-        $pic = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/' . $data['image'];
+        $qty_available = $data['qty_available'];
+        $pic = $_SERVER['DOCUMENT_ROOT'] . '/images/' . $data['picture'];
         if (is_file($pic)) {
-            $image = '<img src = "/assets/images/' . $data['image'] . '" width="250">';
+            $picture = '<img src = "/images/' . $data['picture'] . '" width="250">';
         } else {
-            $image = '';
+            $picture = '';
         }
 
         $id = $data['id'];
@@ -39,7 +39,7 @@ class news
             <h2>$name</h2>
             <h5>$price</h5>
             <h5>$qty_available</h5>
-            $image
+            $picture
             <p>$description</p>
         </div>        
 story;

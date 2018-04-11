@@ -14,7 +14,6 @@ class layout
                  <li align="left"><a href = "GetPosts.php">Post List</a></li>
                  <li align= "left"><a href="/CreatePost.php">Create Post</a></li>
                  <li align="left"><a href = "EditUser.php">Edit Profile</a></li>
-                 <li align=left"><a href="logout.php">Logout</a></li>
                  </ul>
              </nav >
          </div >
@@ -31,7 +30,6 @@ class layout
              <ul class="w3-ul">
                  <li align = "left" ><a href = "index.php" > Home</a></li>
                  <li class ="left"><a href = "CreateUser.php" > Sign Up</a> </li>
-                 <li class ="left"><a href = "login.php" > Log In</a> </li>
                  <li align= "left"><a href="/CreatePost.php">Create Post</a></li>
                  </ul>
              </nav >

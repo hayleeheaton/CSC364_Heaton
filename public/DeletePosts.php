@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
 Layout::pageTop('Delete Post');
 if ( $requestType == 'GET' ) {
     // use sql to get the post with id = 39
-    $sql = 'delete from posts where id = ' . $_GET['id'];//delete
+    $sql = 'delete from products where id = ' . $_GET['id'];//delete
     $result = $db->query($sql);
 }
 header('Location:index.php');

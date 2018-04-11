@@ -19,13 +19,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
                     print_r($_POST);
                     echo '</pre>';
                     // pull the fields from the POST array.
-                    $title = $_POST['title'];
+                    $name = $_POST['name'];
                     $input = $_POST;
 
-                    $file = $_FILES[ 'imageupload' ][ 'tmp_name' ];
-                    $fileName = $_FILES[ 'imageupload' ][ 'name' ];
+                    $file = $_FILES[ 'picture' ][ 'tmp_name' ];
+                    $fileName = $_FILES[ 'picture' ][ 'name' ];
 
-                    if (!$_FILES[ 'imageupload' ][ 'tmp_name' ] == 0){
+                    if (!$_FILES[ 'picture' ][ 'tmp_name' ] == 0){
                         if ( !is_uploaded_file($file) ) {
                             echo '<h3>Error</h3><p>File was not uploaded via POST form.</p>';
                             exit;
@@ -42,7 +42,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
                                 echo '<h3>Success</h3><p>The image was uploaded</p>';
                                 //echo '<pre>' . print_r($imagesizedata) . '</pre>';
                                 // Copy image to permanent location
-                                $uploaded_file = $_SERVER[ 'DOCUMENT_ROOT' ] . '/images/' . $_FILES[ 'imageupload' ][ 'name' ];
+                                $uploaded_file = $_SERVER[ 'DOCUMENT_ROOT' ] . '/images/' . $_FILES[ 'picture' ][ 'name' ];
                                 // Move file to permanent location
                                 move_uploaded_file($file, $uploaded_file);
                                 // Display the image
@@ -61,16 +61,17 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
                     //echo '<h3>Error</h3><p>There was an error uploading the file</p>';
 
 
-                    $image = $fileName;
-                    $content = $_POST['content'];
-                    $startDate = $_POST['startDate'];
-                    $endDate = $_POST['endDate'];
+                    $picture = $fileName;
+                    $description = $_POST['description'];
+                    $price = $_POST['price'];
+                    $sku = $_POST['sku'];
+                    $qty_available = $_POST['qty_available'];
                     // This SQL uses double quotes for the query string.  If a field is not a number (it's a string or a date) it needs
                     // to be enclosed in single quotes.  Note that right after values is a ( and a single quote.  Taht single quote comes right
                     // before the value of $title.  Note also that at the end of $title is a ', ' inside of double quotes.  What this will all render
                     // That will generate this piece of SQL:   values ('title text here', 'content text here', '2017-02-01 00:00:00'  and so
                     // on until the end of the sql command.
-                    $sql = "insert into products (id, name, description, price, picture, sku, qty_available) values ('" . $id . "', '" . $name . "', '" . $description . "', '" . $price . "', '" . $picture . "', '" . $sku . "','" . $qty_available . "');";
+                    $sql = "insert into products (name, description, price, picture, sku, qty_available) values ('" . $name . "', '" . $description . "', " . $price . ", '" . $picture . "', '" . $sku . "'," . $qty_available . ");";
                     $db->query($sql);
                 }
                 ?>
@@ -78,34 +79,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
 
             </section>
         </div>
-
-        <div class="col-md-4">
-            <section class="content">
-                <h1>
-                    <center>Posts List</center>
-                </h1>
-                <p>
-                <center>Current and active posts.</center>
-                </p>
-
-                <?php
-                $sql = 'select * from products';
-                $products = $db->query($sql);
-                // Loop through the posts and display them
-                while ($products = $products->fetch()) {
-                    // Call the method to create the layout for a post
-                    News::story($products);
-                }
-                ?>
-
-            </section>
-        </div>
     </div>
 
     <?php
-// Generate the page footer
-    Layout::pageBottom();
-
 /**
  * Functions that support the createPost page
  */
@@ -132,53 +108,54 @@ function showForm($data = null)
     $sku = $data['sku'];
     $qty_available = $data['qty_available'];
     echo <<<postform
-<form class="form-horizontal">
+
+<form class="form-horizontal" action="CreatePost.php" method="POST" enctype="multipart/form-data">
 <fieldset>
 
 <!-- Form Name -->
 <legend>Create New Product</legend>
 
-<!-- Text input-->
+<!-- Name -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Product Name</label>  
+  <label class="col-md-4 control-label" for="name">Product Name</label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="Name" class="form-control input-md" required="">
+  <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" required="">
     
   </div>
 </div>
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Description">Description</label>
+  <label class="col-md-4 control-label" for="description">Description</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="Description" name="Description">Description
+    <textarea class="form-control" id="description" name="description">Description
 </textarea>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Price</label>  
+  <label class="col-md-4 control-label" for="price">Price</label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="$" class="form-control input-md">
+  <input id="price" name="price" type="text" placeholder="$" class="form-control input-md">
     
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">SKU Number</label>  
+  <label class="col-md-4 control-label" for="sku">SKU Number</label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="#" class="form-control input-md">
+  <input id="sku" name="sku" type="text" placeholder="#" class="form-control input-md">
     
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Quantity Available</label>  
+  <label class="col-md-4 control-label" for="qty_available">Quantity Available</label>  
   <div class="col-md-4">
-  <input id="textinput" name="textinput" type="text" placeholder="#" class="form-control input-md">
+  <input id="qty_available" name="qty_available" type="text" placeholder="#" class="form-control input-md">
     
   </div>
 </div>

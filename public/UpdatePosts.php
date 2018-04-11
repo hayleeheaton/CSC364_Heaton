@@ -12,7 +12,7 @@ Layout::pageTop('Update Posts');
                 <?php
                 if ($requestType == 'GET') {
 
-                    $sql = 'select * from posts where id = ' . $_GET['id'];
+                    $sql = 'select * from products where id = ' . $_GET['id'];
                     $result = $db->query($sql);
                     $row = $result->fetch();
                     //News::story($row);
