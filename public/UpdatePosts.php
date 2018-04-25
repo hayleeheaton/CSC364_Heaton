@@ -1,6 +1,7 @@
 <?php
 // Include the basic configuration elements
 require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
+require_once (FS_TEMPLATES . 'layout.php');
 // Generate the HTML for the top of the page
 Layout::pageTop('Update Posts');
 // Page content goes here
@@ -18,75 +19,97 @@ Layout::pageTop('Update Posts');
                     //News::story($row);
                     //showUpdateForm($row);
                     $id = $row['id'];
-                    $title = $row['title'];
-                    $content = $row['content'];
-                    $startDate = $row['startDate'];
-                    $endDate = $row['endDate'];
-                    $image = $row['image'];
+                    $name = $row['name'];
+                    $description = $row['description'];
+                    $price = $row['price'];
+                    $sku = $row['sku'];
+                    $qty_available = $row['qty_available'];
+                    $pic = $row['picture'];
                     echo <<<postform
-                <form id="createPostForm" action='UpdatePosts.php' method="POST" class="form-horizontal">
-        <fieldset>
-            <!-- Form Name -->
-            <legend>Update Post</legend>
-  <input type="hidden" name="id" value=$id>
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="title">Title</label>
-                <div class="col-md-8">
-                    <input id="title" name="title" type="text" placeholder="post title" value="$title" class="form-control input-md" required="">
-                </div>
-            </div>
-            <!-- Textarea -->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="content">Content</label>
-                <div class="col-md-8">
-                    <textarea class="form-control" id="content" name="content">$content</textarea>
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="startDate">Effective Date</label>
-                <div class="col-md-8">
-                    <input id="startDate" name="startDate" type="text" placeholder="effective date" value="$startDate" class="form-control input-md" required="">
-                </div>
-            </div>
-            <!-- Text input-->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="endDate">End Date</label>
-                <div class="col-md-8">
-                    <input id="endDate" name="endDate" type="text" placeholder="end date" value="$endDate" class="form-control input-md">
-                </div>
-            </div>
-            <!-- File Button
-                <div class="form-group">
-                <label class="col-md-3 control-label" for="image">Image Upload</label>
-                <div class="col-md-8">
-                    <input id="image" name="image" class="input-file" value="$image" type="file">
-                </div>
-            </div>
-                -->
-            <!-- Button (Double) -->
-            <div class="form-group">
-                <label class="col-md-3 control-label" for="submit"></label>
-                <div class="col-md-8">
-                    <button id="submit" name="submit" value="Submit" class="btn btn-success">Submit</button>
-                    <button id="cancel" name="cancel" value="Cancel" class="btn btn-info">Cancel</button>
-                </div>
-            </div>
-        </fieldset>
-    </form>
+                
+                <form class="form-horizontal" action="CreatePost.php" action = 'UpdatePosts.php' method="POST" enctype="multipart/form-data">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Update Product</legend>
+
+<!-- Name -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="name">Product Name</label>  
+  <div class="col-md-4">
+  <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="description">Description</label>
+  <div class="col-md-4">                     
+    <textarea class="form-control" id="description" name="description">Description
+</textarea>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="price">Price</label>  
+  <div class="col-md-4">
+  <input id="price" name="price" type="text" placeholder="$" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="sku">SKU Number</label>  
+  <div class="col-md-4">
+  <input id="sku" name="sku" type="text" placeholder="#" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="qty_available">Quantity Available</label>  
+  <div class="col-md-4">
+  <input id="qty_available" name="qty_available" type="text" placeholder="#" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- File Button --> 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="picture">Upload Picture</label>
+  <div class="col-md-4">
+    <input id="picture" name="picture" class="input-file" type="file">
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="singlebutton"></label>
+  <div class="col-md-4">
+    <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit Product</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
 postform;
                 } elseif ($requestType == 'POST') {
                     //Validate data
                     // Save data
                     $id = $_POST['id'];
-                    $title = htmlspecialchars($_POST['title'], ENT_QUOTES);
-                    $content = htmlspecialchars($_POST['content'], ENT_QUOTES);
-                    $startDate = htmlspecialchars($_POST['startDate'], ENT_QUOTES);
-                    $endDate = htmlspecialchars($_POST['endDate'], ENT_QUOTES);
+                    $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
+                    $description = htmlspecialchars($_POST['description'], ENT_QUOTES);
+                    $price = htmlspecialchars($_POST['price'], ENT_QUOTES);
+                    $sku = htmlspecialchars($_POST['sku'], ENT_QUOTES);
+                    $qty_available = htmlspecialchars($_POST['qty_available'], ENT_QUOTES);
+                    $pic = htmlspecialchars($_POST['pic'], ENT_QUOTES);
 
                     //echo '<pre>' . print_r($_POST) . '</pre>';
-                    $sql = "update posts set title = '$title', content = '$content', startDate = '$startDate', endDate = '$endDate' where id = $id;";
+                    $sql = "update posts set name = '$name', description = '$description', price = '$price', sku = '$sku', qty_available = '$qty_available', pic = '$pic' where id = $id;";
                     $result = $db->query($sql);
                     //header('Location: index.php');
                 }

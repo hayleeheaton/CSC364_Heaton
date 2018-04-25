@@ -11,9 +11,7 @@ class layout
              <nav class="blog-nav" >
              <ul class="w3-ul">
                  <li align="left"><a href = "index.php">Home</a></li>
-                 <li align="left"><a href = "GetPosts.php">Post List</a></li>
                  <li align= "left"><a href="/CreatePost.php">Create Post</a></li>
-                 <li align="left"><a href = "EditUser.php">Edit Profile</a></li>
                  </ul>
              </nav >
          </div >
@@ -29,8 +27,8 @@ class layout
              <div class="blog-nav" >
              <ul class="w3-ul">
                  <li align = "left" ><a href = "index.php" > Home</a></li>
-                 <li class ="left"><a href = "CreateUser.php" > Sign Up</a> </li>
-                 <li align= "left"><a href="/CreatePost.php">Create Post</a></li>
+                 <li align = "left" ><a href = "/CreatePost.php" > Create Product</a></li>
+                 <li align = "left"><a href = "/Cart.php"> My Cart</a><li>
                  </ul>
              </nav >
              </div>      
@@ -230,7 +228,7 @@ SideBar;
          <div class="w3-padding-32 w3-padding-xlarge">
                 <a href="#" class="w3-btn w3-padding-large w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
                 <p>Contact Information: 654.665.6499 | fans@yahoo.com </p>
-                 <p>© 2015 Nicholas Sparks | All Rights Resevered</p>
+                 <p>© 2015 | All Rights Resevered</p>
              </div>
             </footer>
 </html>

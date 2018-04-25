@@ -8,27 +8,30 @@ $sql = 'select * from posts where id = ' . $_GET['id'];//delete
 $result = $db->query($sql);
 $row = $result->fetch();
 $id = $row['id'];
-$title = $row['title'];
-$content = $row['content'];
-$startDate = $row ['startDate'];
-$endDate = $row ['endDate'];
+$name  = $row['name'];
+$description = $row['description'];
+$price = $row ['price'];
+$sku = $row ['sku'];
+$qty_available = $row ['qty_available'];
 echo <<<viewform
 <form id="createPostForm" action='updatePosts.php' method="POST" class="form-horizontal">
     <fieldset>
         <input type="hidden" name="id" value=$id">
-        <input type="hidden" name="title" value=$title">
-        <input type="hidden" name="content" value=$content">
-        <input type="hidden" name="startDate" value=$startDate">
-        <input type="hidden" name="endDate" value=$endDate">
+        <input type="hidden" name="name" value=$name">
+        <input type="hidden" name="description" value=$description">
+        <input type="hidden" name="price" value=$price">
+        <input type="hidden" name="sku" value=$sku">
+        <input type="hidden" name="qty_available" value=$qty_available">
 
 
         <form id="createPostForm" action='updatePosts.php' method="POST" class="form-horizontal">
             <fieldset>
                 <input type="hidden" name="id" value=$id">
-                <input type="hidden" name="title" value=$title">
-                <input type="hidden" name="content" value=$content">
-                <input type="hidden" name="startDate" value=$startDate">
-                <input type="hidden" name="endDate" value=$endDate">
+                <input type="hidden" name="name" value=$name">
+                <input type="hidden" name="description" value=$description">
+                <input type="hidden" name="price" value=$price">
+                <input type="hidden" name="sku" value=$sku">
+                <input type="hidden" name="qty_available" value=$qty_available">
 
                 <!-- Form Name -->
                 <legend>View your post below!</legend>
@@ -55,6 +58,7 @@ echo <<<viewform
                     <div class="col-md-8">
                         <input id="startDate" name="startDate" type="text" placeholder="effective date" value="$startDate" class="form-control input-md" readonly required="">
                     </div>
+                
                 </div>
 
                 <!-- Text input-->

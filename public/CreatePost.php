@@ -1,6 +1,7 @@
 <?php
 // Include the basic configuration elements
 require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
+
 // Page content goes here
     ?>
 
@@ -73,7 +74,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/application_includes.php');
                     // on until the end of the sql command.
                     $sql = "insert into products (name, description, price, picture, sku, qty_available) values ('" . $name . "', '" . $description . "', " . $price . ", '" . $picture . "', '" . $sku . "'," . $qty_available . ");";
                     $db->query($sql);
+                    header('Location: index.php');
                 }
+                
+                    exit;
+                    
+
                 ?>
 
 

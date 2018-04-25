@@ -41,6 +41,8 @@ class news
             <h5>$qty_available</h5>
             $picture
             <p>$description</p>
+            <a href="/UpdatePosts.php?id=' . $id . '" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Update  </a>
+            <a href="/DeletePosts.php?id=' . $id . '" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">  Delete</a>
         </div>        
 story;
     }
